@@ -20,4 +20,30 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
+  $("#currentDay").text(dayjs().format("ddd, D MMMM YYYY"));
 });
+
+
+// jQuery to be used within entire assignment
+    // $("") == query selector
+
+// Past, Present, Future 
+  // Need to use 24 hour clock
+  // Comparison between current time
+    // time-block time < current time == past
+    // time-block time = current time == present
+    // time-block time > current time == future
+  // dayjs() is time function within jquery
+
+// Save events
+  // Places in local storage
+  // How to save in local storage?
+    // Save as a JSON file
+  // How to target each time block?
+    // Time block id should be unique? ---- time?
+    // id === time? 
+    // event.target === correct time slot?
+
+// Pulling saved events and render onto the according time block
+  // Local storage saved within an array?
+  // Create list elements then append onto the time block?
