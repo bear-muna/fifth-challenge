@@ -12,7 +12,6 @@ var hour15 = $('#hour-15');
 var hour16 = $('#hour-16');
 var hour17 = $('#hour-17');
 
-var counter = 9;
 
 var timeBlocksArray = [];
   // TODO: Add code to display the current date in the header of the page.
@@ -76,6 +75,7 @@ function retrieveData() {
   console.log(timeBlocksArray);
 
   renderData();
+  timeComparison();
 };
 
 
@@ -85,16 +85,68 @@ function renderData() {
 
     var renderBlock = $("#" + timeBlocksArray[i].id);
 
-    var test = renderBlock.children('.description');
-
     renderBlock.children('textarea').text(timeBlocksArray[i].value);
-
-
-
-
   }
 
 }
+
+function timeComparison() {
+
+  var arr = [hour9ob = {
+              target: hour9,
+              time: 9,
+            }, 
+            hour10ob = {
+              target: hour10,
+              time: 10,
+            }, 
+            hour11ob = {
+              target: hour11,
+              time: 11,
+            }, 
+            hour12ob = {
+              target: hour12,
+              time: 12,
+            }, 
+            hour13ob = {
+              target: hour13,
+              time: 13,
+            }, 
+            hour14ob = {
+              target: hour14,
+              time: 14,
+            }, 
+            hour15ob = {
+              target: hour15,
+              time: 15,
+            }, 
+            hour16ob = {
+              target: hour16,
+              time: 16,
+            }, 
+            hour17ob = {
+              target: hour17,
+              time: 17,
+            }];
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].time < dayjs().hour()) {
+      arr[i].target.removeClass("present", "future");
+      arr[i].target.addClass("past");
+    } else if (arr[i].time > dayjs().hour()) {
+      arr[i].target.removeClass("past", "present");
+      arr[i].target.addClass("future");
+    } else {
+      arr[i].target.removeClass("past", "future");
+      arr[i].target.addClass("present");
+    }
+  }
+}
+
+
+
+
+
 
 timeBlock.on('click', '.fa-save', storeData)
 
