@@ -50,22 +50,15 @@ function storeData(event) {
 
 
   
-  // Should I make a premade array?
-  if (timeBlocksArray.length === 0) {
-    timeBlocksArray.push(timeBlockObj);
-  } else {
-    for(let i = 0; i < timeBlocksArray.length; i++) {
-      if (timeBlocksArray[i].id === inputId) {
-        
-        timeBlocksArray.splice(i, 1);
-        timeBlocksArray.push(timeBlockObj);
-  
-      } else { 
-        timeBlocksArray.push(timeBlockObj);
-      }
-      
+
+  for(let i = 0; i < timeBlocksArray.length; i++) {
+    if (timeBlocksArray[i].id === inputId) {
+      timeBlocksArray.splice(i, 1);
     }
+    
   }
+  
+  timeBlocksArray.push(timeBlockObj);
   
 
 
