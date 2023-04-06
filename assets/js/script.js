@@ -1,7 +1,9 @@
+// Variables
 var timerEl = $('#currentDay');
 var saveBtn = $('.fa-save');
 var timeBlock = $('.time-block');
 
+// jQuery selectors
 var hour9 = $('#hour-9');
 var hour10 = $('#hour-10');
 var hour11 = $('#hour-11');
@@ -12,86 +14,83 @@ var hour15 = $('#hour-15');
 var hour16 = $('#hour-16');
 var hour17 = $('#hour-17');
 
-
+// Array for storage
 var timeBlocksArray = [];
-  // TODO: Add code to display the current date in the header of the page.
-  // calculates current time and updates every second
-;
 
-
-
-
-
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
 $(function () {
 
+// Sets current time display onto the header
 var timeInterval = setInterval(function() {
     var currentTime = dayjs().format("ddd, D MMMM YYYY hh:mm:ss a");
     timerEl.text(currentTime);
   }, 1000);
 
+// Function to store data into local storage after clicking 'save' icon  
 function storeData(event) {
-  
 
+  // Event targets when you click 'save' icon
   var inputId = $(event.target).parents().parents('.time-block').attr("id");
   var inputValue = $(event.target).parents().siblings('.description').val().trim();
 
+
+  // Object that is placed within an array after being created
   var timeBlockObj = {
       id: null,
       value: null,
       time: null,
   }
   
-  console.log(inputId);
-  console.log(inputValue);
-
-  
-
+  // For loop to eliminate duplicates of the same timeBlockObj
   for(let i = 0; i < timeBlocksArray.length; i++) {
     if (timeBlocksArray[i].id === inputId) {
       timeBlocksArray.splice(i, 1);
-    }
-    
+    } 
   }
+
+  // Sets object properties to the event.target
   timeBlockObj.id = inputId;
   timeBlockObj.value = inputValue;
+
+  // Push the object into the array
   timeBlocksArray.push(timeBlockObj);
   
-  console.log(timeBlocksArray);
-
+  // Places array into local storage using JSON format
   localStorage.setItem('timeBlocksArray', JSON.stringify(timeBlocksArray));
 };
 
+// Function to take out array from local storage
 function retrieveData() {
   
+  // Parse through the local storage using JSON
   var parsedArray = JSON.parse(localStorage.getItem('timeBlocksArray'));
 
+  // if statement to make sure that the local storage array will transfer to js array
   if (parsedArray !== null) {
     timeBlocksArray = parsedArray;
   }
-
-  console.log(timeBlocksArray);
 
   renderData();
   timeComparison();
 };
 
-
+// Function to display the object data onto their respective time block
 function renderData() {
 
+  // For loop to query select the correct block using jQuery
   for (let i = 0; i < timeBlocksArray.length; i++) {
-
     var renderBlock = $("#" + timeBlocksArray[i].id);
 
+    // tree traversal to find the correct textarea
+    // Object value is now inserted into the textarea
     renderBlock.children('textarea').text(timeBlocksArray[i].value);
   }
 
 }
 
+// Function to determine past, present, and future of the time blocks
 function timeComparison() {
 
+  // Array of objects with hardcoded times
   var arr = [hour9ob = {
               target: hour9,
               time: 9,
@@ -129,6 +128,7 @@ function timeComparison() {
               time: 17,
             }];
 
+  // If statement to compare the object's time with the hour of dayjs
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].time < dayjs().hour()) {
       arr[i].target.removeClass("present", "future");
@@ -143,114 +143,8 @@ function timeComparison() {
   }
 }
 
-
-
-
-
-
+// jQuery click event that only works with the class of .fa-save
 timeBlock.on('click', '.fa-save', storeData)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
 
   retrieveData();
 });
-
-
-
-// jQuery to be used within entire assignment
-    // $("") == query selector
-
-// Past, Present, Future 
-  // Need to use 24 hour clock
-  // Comparison between current time
-    // time-block time < current time == past
-    // time-block time = current time == present
-    // time-block time > current time == future
-  // dayjs() is time function within jquery
-
-// Save events
-  // Places in local storage
-  // How to save in local storage?
-    // Save as a JSON file
-  // How to target each time block?
-    // Time block id should be unique? ---- time?
-    // id === time? 
-    // event.target === correct time slot?
-
-// Pulling saved events and render onto the according time block
-  // Local storage saved within an array?
-  // Create list elements then append onto the time block?
-
-// TODO: Past, Present, Future
-
-// function timeComparison() {
-//   // Should we make an array of all the cards?
-//   // Each card should have a signature id
-//   // Each id will indicate which hour it is
-
-//   dayjs().isBefore( , 'hour');
-
-//   dayjs().isSame( , 'hour');
-
-//   dayjs().isAfter( , 'hour');
-
-//   // Use for loop
-//   // Can use an if statement
-//   for (let i = 0; i < arr.length; i++) {
-
-
-//     if (... dayjs().isBefore(, 'hour')) {
-//       .. addClass('past');
-//     } else if (... daysjs().isAfter( , 'hour') {
-//       .. addClass('future');
-//     } else {
-//       .. addClass('present');
-//     }
-//   }
-
-
-//   // How to change id of the cards to dayjs()?
-// }
-
-
-
