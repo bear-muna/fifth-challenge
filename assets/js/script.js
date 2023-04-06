@@ -1,4 +1,4 @@
-var timeEl = $('#currentDay');
+var timerEl = $('#currentDay');
 var saveBtn = $('.fa-save');
 var timeBlock = $('.time-block');
 
@@ -11,6 +11,8 @@ var hour14 = $('#hour-14');
 var hour15 = $('#hour-15');
 var hour16 = $('#hour-16');
 var hour17 = $('#hour-17');
+
+var counter = 9;
 
 var timeBlocksArray = [];
   // TODO: Add code to display the current date in the header of the page.
@@ -28,24 +30,54 @@ $(function () {
 
 var timeInterval = setInterval(function() {
     var currentTime = dayjs().format("ddd, D MMMM YYYY hh:mm:ss a");
-    timeEl.text(currentTime);
+    timerEl.text(currentTime);
   }, 1000);
 
 function storeData(event) {
+  
+
+  var inputId = $(event.target).parents().parents('.time-block').attr("id");
+  var inputValue = $(event.target).parents().siblings('.description').val().trim();
 
   var timeBlockObj = {
-    id: $(event.target).parents().parents('.time-block').attr("id"),
-    value: $(event.target).parents().siblings('.description').val().trim(),
+      id: inputId,
+      value: inputValue,
+      time: null,
   }
-
+  
   console.log(timeBlockObj.value);
   console.log(timeBlockObj.id);
 
-  timeBlocksArray.push(timeBlockObj);
+
+  
+  // Should I make a premade array?
+  if (timeBlocksArray.length === 0) {
+    timeBlocksArray.push(timeBlockObj);
+  } else {
+    for(let i = 0; i < timeBlocksArray.length; i++) {
+      if (timeBlocksArray[i].id === inputId) {
+        
+        timeBlocksArray.splice(i, 1);
+        timeBlocksArray.push(timeBlockObj);
+  
+      } else { 
+        timeBlocksArray.push(timeBlockObj);
+      }
+      
+    }
+  }
+  
+
+
 
   console.log(timeBlocksArray);
 
   localStorage.setItem('timeBlocksArray', JSON.stringify(timeBlocksArray));
+
+
+ 
+
+  
  
 };
 
@@ -65,26 +97,26 @@ function retrieveData() {
 
 function renderData() {
 
-  for (let i = 0; i < timeBlocksArray.length; i++) {
+  // for (let i = 0; i < timeBlocksArray.length; i++) {
 
-    var renderBlock = $("'#" + timeBlocksArray[i].id + "'");
+  //   var renderBlock = $("'#" + timeBlocksArray[i].id + "'");
 
-    console.log(renderBlock.id);
+  //   console.log(renderBlock.id);
 
-    console.log(timeBlocksArray[i].id);
-    console.log(timeBlocksArray[i].value);
-    console.log(renderBlock);
+  //   console.log(timeBlocksArray[i].id);
+  //   console.log(timeBlocksArray[i].value);
+  //   console.log(renderBlock);
 
-    var test = renderBlock.children('.description');
+  //   var test = renderBlock.children('.description');
 
-    console.log(test);
+  //   console.log(test);
 
-    renderBlock.children('textarea').text("TESTING");
-
-
+  //   renderBlock.children('textarea').text("TESTING");
 
 
-  }
+
+
+  // }
 
 }
 
@@ -135,12 +167,6 @@ timeBlock.on('click', '.fa-save', storeData)
   retrieveData();
 });
 
-  var timeInterval = setInterval(function () {
-    
-    timerEL.text(dayjs().format("ddd, D MMMM YYYY hh:mm:ss"));
-    
-
-  }, 1000);
 
 
 // jQuery to be used within entire assignment
@@ -197,37 +223,15 @@ timeBlock.on('click', '.fa-save', storeData)
 
 //   // How to change id of the cards to dayjs()?
 // }
-var arr = [];
-
-var blockObj = {
-  time: undefined, 
-}
-
-arr.push(blockObj);
-
-var counter = 9;
-
-for (let i = 0; i < arr.length; i++) {
+function timeComparison() {
+  for (let i = 0; i < timeBlocksArray.length; i++) {
   
-  arr[i].time = dayjs().hour(counter)
+  arr[i].time = counter;
 
   counter++;
+
+  }
+
 }
 
-console.log(arr);
 
-var test = {
-  time: dayjs().hour(12),
-}
-var timer = dayjs().hour();
-
-var res = dayjs().isBefore(test[0], 'hour');
-
-
-console.log(timer);
-
-console.log(res);
-
-console.log(test);
-
-console.log(dayjs());
