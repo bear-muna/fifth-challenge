@@ -40,14 +40,13 @@ function storeData(event) {
   var inputValue = $(event.target).parents().siblings('.description').val().trim();
 
   var timeBlockObj = {
-      id: inputId,
-      value: inputValue,
+      id: null,
+      value: null,
       time: null,
   }
   
-  console.log(timeBlockObj.value);
-  console.log(timeBlockObj.id);
-
+  console.log(inputId);
+  console.log(inputValue);
 
   
 
@@ -57,21 +56,13 @@ function storeData(event) {
     }
     
   }
-  
+  timeBlockObj.id = inputId;
+  timeBlockObj.value = inputValue;
   timeBlocksArray.push(timeBlockObj);
   
-
-
-
   console.log(timeBlocksArray);
 
   localStorage.setItem('timeBlocksArray', JSON.stringify(timeBlocksArray));
-
-
- 
-
-  
- 
 };
 
 function retrieveData() {
@@ -94,15 +85,7 @@ function renderData() {
 
     var renderBlock = $("#" + timeBlocksArray[i].id);
 
-    console.log(renderBlock.id);
-
-    console.log(timeBlocksArray[i].id);
-    console.log(timeBlocksArray[i].value);
-    console.log(renderBlock);
-
     var test = renderBlock.children('.description');
-
-    console.log(test);
 
     renderBlock.children('textarea').text(timeBlocksArray[i].value);
 
@@ -216,15 +199,6 @@ timeBlock.on('click', '.fa-save', storeData)
 
 //   // How to change id of the cards to dayjs()?
 // }
-function timeComparison() {
-  for (let i = 0; i < timeBlocksArray.length; i++) {
-  
-  arr[i].time = counter;
 
-  counter++;
-
-  }
-
-}
 
 
