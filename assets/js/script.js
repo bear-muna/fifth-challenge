@@ -90,26 +90,26 @@ function retrieveData() {
 
 function renderData() {
 
-  // for (let i = 0; i < timeBlocksArray.length; i++) {
+  for (let i = 0; i < timeBlocksArray.length; i++) {
 
-  //   var renderBlock = $("'#" + timeBlocksArray[i].id + "'");
+    var renderBlock = $("#" + timeBlocksArray[i].id);
 
-  //   console.log(renderBlock.id);
+    console.log(renderBlock.id);
 
-  //   console.log(timeBlocksArray[i].id);
-  //   console.log(timeBlocksArray[i].value);
-  //   console.log(renderBlock);
+    console.log(timeBlocksArray[i].id);
+    console.log(timeBlocksArray[i].value);
+    console.log(renderBlock);
 
-  //   var test = renderBlock.children('.description');
+    var test = renderBlock.children('.description');
 
-  //   console.log(test);
+    console.log(test);
 
-  //   renderBlock.children('textarea').text("TESTING");
-
-
+    renderBlock.children('textarea').text(timeBlocksArray[i].value);
 
 
-  // }
+
+
+  }
 
 }
 
